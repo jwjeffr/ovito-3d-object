@@ -1,250 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PETN Visualization — Viewer</title>
-  <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --muted:#6b7280;
-      --accent:#0f766e;
-      --glass: rgba(255,255,255,0.6);
-      --shadow: 0 6px 20px rgba(16,24,40,0.08);
-      --radius:12px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+<meta charset="UTF-8">
+<title>PETN Molecule Viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 40px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .viewer-container {
+    display: flex;
+    justify-content: center;
+  }
+  iframe {
+    width: 800px;
+    height: 600px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #000;
+  }
+  @media (max-width: 900px) {
+    iframe {
+      width: 100%;
+      height: 500px;
     }
-    [data-theme="dark"]{
-      --bg:#0b1220;
-      --card:#0f1724;
-      --muted:#9aa6b2;
-      --accent:#22c1b2;
-      --glass: rgba(255,255,255,0.03);
-      color: #e6eef6;
-    }
-    html,body{height:100%;margin:0;background:var(--bg);color:#0b1320}
-    .app {
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      gap:24px;
-      padding:28px;
-      box-sizing:border-box;
-    }
-
-    header {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-    }
-    .brand {
-      display:flex;
-      gap:14px;
-      align-items:center;
-    }
-    .logo {
-      width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#6ee7b7);
-      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;box-shadow:var(--shadow);
-      font-family: "Segoe UI", Roboto, Arial;
-    }
-    h1 { margin:0; font-size:1.05rem; letter-spacing: -0.2px; }
-    .sub { margin:0; font-size:0.85rem;color:var(--muted); }
-
-    .controls {
-      display:flex;gap:8px;align-items:center;
-    }
-    button {
-      background:var(--card); border:1px solid rgba(0,0,0,0.06); padding:8px 12px;border-radius:9px;cursor:pointer;
-      box-shadow:var(--shadow); font-size:0.95rem;
-    }
-    button.secondary { background:transparent;border:1px solid rgba(0,0,0,0.06); }
-    button:active{ transform:translateY(1px) }
-
-    main {
-      display:grid;
-      grid-template-columns: 360px 1fr;
-      gap:20px;
-      align-items:start;
-    }
-    @media (max-width:900px){
-      main { grid-template-columns: 1fr; }
-    }
-
-    .card {
-      background:var(--card); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);
-    }
-
-    .info h2 { margin:0 0 8px 0; font-size:1rem; }
-    .info p { margin:0 0 12px 0; color:var(--muted); line-height:1.45; font-size:0.95rem; }
-
-    .meta { display:flex; gap:8px; flex-wrap:wrap; font-size:0.9rem; color:var(--muted); }
-    .meta .pill { background:var(--glass); padding:6px 8px; border-radius:8px; }
-
-    /* viewer card */
-    .viewer-wrap { display:flex; flex-direction:column; gap:12px; }
-    .viewer-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; }
-    .viewer-toolbar .title { font-weight:600; }
-    .viewer {
-      border-radius:10px;
-      overflow:hidden;
-      height:560px;
-      background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
-      border:1px solid rgba(0,0,0,0.04);
-    }
-    @media (max-width:900px){
-      .viewer { height:420px; }
-    }
-    .viewer iframe {
-      width:100%;
-      height:100%;
-      border:0;
-      display:block;
-      background:#000; /* fallback bg while iframe loads */
-    }
-
-    footer { text-align:center; color:var(--muted); font-size:0.9rem; padding:8px 0 0 0; }
-    a.small { color:var(--accent); text-decoration:none; }
-    .sr-only { position:absolute !important; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <div class="app" id="app" data-theme="light">
-    <header>
-      <div class="brand">
-        <div class="logo">PET</div>
-        <div>
-          <h1>PETN Viewer</h1>
-          <p class="sub">Interactive 3D visualization</p>
-        </div>
-      </div>
 
-      <div class="controls">
-        <button id="openBtn" title="Open viewer in new tab">Open in new tab</button>
-        <button id="fsBtn" title="Toggle fullscreen">Fullscreen</button>
-        <button id="themeBtn" title="Toggle light / dark">Dark</button>
-      </div>
-    </header>
+<h1>PETN Molecular Structure</h1>
 
-    <main>
-      <aside class="card info">
-        <h2>About this view</h2>
-        <p>
-          This panel shows a PETN molecule visualization. Use the controls to open the visualization in a new tab,
-          or view it fullscreen.
-        </p>
+<div class="viewer-container">
+  <iframe
+      src="object.html"
+      loading="lazy"
+      allowfullscreen>
+  </iframe>
+</div>
 
-        <div class="meta" aria-hidden>
-          <div class="pill">Model: PETN</div>
-          <div class="pill">Format: glTF / GLB</div>
-          <div class="pill">Renderer: OVITO / glTF</div>
-        </div>
-
-        <hr style="margin:14px 0; border:0; height:1px; background:linear-gradient(90deg,transparent,rgba(0,0,0,0.04),transparent)">
-
-      </aside>
-
-      <section class="card viewer-wrap" aria-labelledby="viewerLabel">
-        <div class="viewer-toolbar">
-          <div>
-            <div class="title" id="viewerLabel">3D Viewer</div>
-            <div style="font-size:0.85rem;color:var(--muted)">Interactive molecular visualization</div>
-          </div>
-          <div style="display:flex;gap:8px;">
-            <button id="reloadBtn" class="secondary" title="Reload iframe">Reload</button>
-            <button id="fitBtn" class="secondary" title="Fit to view">Fit</button>
-          </div>
-        </div>
-
-        <div class="viewer card" id="viewerCard" aria-live="polite">
-          <iframe src="object.html" style="width:50%;" title="Iframe Example"></iframe>
-          <iframe id="moleculeIframe"
-                  srcdoc="<p style='font-family:Inter,Arial,sans-serif;padding:20px;color:#666'>Replace this iframe with your own viewer iframe or set the iframe 'src' to your viewer URL.</p>"
-                  title="PETN molecule viewer"
-                  loading="lazy"
-                  allow="fullscreen; accelerometer; gyroscope; autoplay; xr-spatial-tracking">
-          </iframe>
-        </div>
-      </section>
-    </main>
-
-    <footer class="card" style="background:transparent;border-radius:8px;padding:12px 18px;">
-      <small>Built for quick preview • <a class="small" href="#" id="creditsLink">Update viewer</a></small>
-    </footer>
-  </div>
-
-  <script>
-    // Utilities: open iframe src in new tab, fullscreen toggle, theme toggle, reload, fit placeholder
-    const iframe = document.getElementById('moleculeIframe');
-    const openBtn = document.getElementById('openBtn');
-    const fsBtn = document.getElementById('fsBtn');
-    const themeBtn = document.getElementById('themeBtn');
-    const reloadBtn = document.getElementById('reloadBtn');
-    const fitBtn = document.getElementById('fitBtn');
-    const app = document.getElementById('app');
-
-    openBtn.addEventListener('click', () => {
-      // try to open iframe src; if none (srcdoc), open about:blank for user to paste
-      const src = iframe.getAttribute('src') || iframe.getAttribute('data-src') || null;
-      if (src && src.trim()) {
-        window.open(src, '_blank', 'noopener');
-      } else {
-        const w = window.open('', '_blank', 'noopener');
-        w.document.write('<p style="font-family:Inter,Arial,sans-serif;padding:20px;">Paste your iframe or the viewer URL here.</p>');
-        w.document.title = 'PETN viewer (paste URL)';
-      }
-    });
-
-    fsBtn.addEventListener('click', async () => {
-      // request fullscreen for the iframe container
-      const el = document.getElementById('viewerCard');
-      if (!document.fullscreenElement) {
-        try { await el.requestFullscreen(); }
-        catch (e) { alert('Fullscreen request failed: ' + e.message); }
-      } else {
-        document.exitFullscreen();
-      }
-    });
-
-    themeBtn.addEventListener('click', () => {
-      const current = app.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-      const next = current === 'dark' ? 'light' : 'dark';
-      app.setAttribute('data-theme', next);
-      themeBtn.textContent = next === 'dark' ? 'Light' : 'Dark';
-    });
-
-    reloadBtn.addEventListener('click', () => {
-      // reload iframe content
-      try {
-        iframe.contentWindow.location.reload();
-      } catch (e) {
-        // fallback: reset src to force reload
-        const src = iframe.getAttribute('src');
-        iframe.setAttribute('src', src);
-      }
-    });
-
-    fitBtn.addEventListener('click', () => {
-      // best-effort bridge: if the iframe exposes a 'fit' function via postMessage, send it.
-      // Many viewers (three.js viewers) may listen to postMessage to fit the model.
-      const msg = { type: 'fit' };
-      try {
-        iframe.contentWindow.postMessage(msg, '*');
-      } catch (e) {
-        // no-op
-      }
-    });
-
-    // accessibility: allow opening a help window from the footer link
-    document.getElementById('creditsLink').addEventListener('click', (ev) => {
-      ev.preventDefault();
-      alert('To use: paste your iframe markup into the viewer card where the placeholder comment is. If your viewer is a glTF/GLB viewer served from a URL, set the iframe src to that URL.');
-    });
-
-    // Helpful hint: if you already have full iframe markup, you can programmatically replace the placeholder:
-    // Example usage (uncomment and modify if you want):
-    // document.getElementById('viewerCard').innerHTML = '<iframe id="moleculeIframe" src="https://example.com/viewer" loading="lazy" allow="fullscreen"></iframe>';
-  </script>
 </body>
 </html>
